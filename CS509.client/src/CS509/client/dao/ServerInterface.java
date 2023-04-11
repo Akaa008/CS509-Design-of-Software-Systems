@@ -12,6 +12,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import CS509.client.util.QueryFactory;
+import CS509.client.flight.Flight;
+import CS509.client.flight.Flights;
 
 
 /**
@@ -76,23 +78,27 @@ public class ServerInterface {
 		return result.toString();
 	}
 	
-	public String getFlights (String team, String airportCode, String day) {
+	public Flights getFlights (String team, String departCode,String arrivalCode, String day,boolean isByDeparture) {
+	// public Flight getFlights (String team, String airportCode, String day,boolean isByDeparture) {
 		
 		URL url;
 		HttpURLConnection connection;
 		BufferedReader reader;
 		String line;
 		StringBuffer result = new StringBuffer();
+		String xmlFlights;
+		Flights flights;
 
 		try {
 			/**
 			 * Create an HTTP connection to the server for a GET 
 			 */
-			url = new URL(mUrlBase + QueryFactory.getFlightsDeparting(team, airportCode, day));
+			if(isByDeparture)url = new URL(mUrlBase + QueryFactory.getFlightsDeparting(team,departCode,day));
+			else url = new URL(mUrlBase + QueryFactory.getFlightsArriving(team, arrivalCode, day));
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("User-Agent", team);
-
+			// System.out.println(url);
 			/**
 			 * If response code of SUCCESS read the XML string returned
 			 * line by line to build the full return string
@@ -106,6 +112,7 @@ public class ServerInterface {
 				reader = new BufferedReader(new InputStreamReader(inputStream));
 				while ((line = reader.readLine()) != null) {
 					result.append(line);
+					result.append(System.getProperty("line.separator"));
 				}
 				reader.close();
 			}
@@ -114,8 +121,11 @@ public class ServerInterface {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return result.toString();
+		// return result.toString();
+		
+		xmlFlights =  result.toString();
+		flights = Flights.addAllf(xmlFlights);
+		return flights;
 	}
 	
 	public boolean lock (String team) {

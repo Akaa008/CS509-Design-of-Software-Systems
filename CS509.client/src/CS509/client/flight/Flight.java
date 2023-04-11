@@ -5,7 +5,7 @@ package CS509.client.flight;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import CS509.client.airport.Airports;
 /**
  * This class holds values pertaining to a single flight from one airport to another. 
  * Class member attributes are the same as defined by the CS509 server API and store 
@@ -33,6 +33,8 @@ public class Flight {
 	private int mSeatsFirstclass;
 	private String mPriceCoach;
 	private int mSeatsCoach;
+	private String line;
+	private String line2;
 	
 	public Flight (
 			String airplane,
@@ -58,8 +60,16 @@ public class Flight {
 		mSeatsFirstclass = seatsFirstclass;
 		mPriceCoach = priceCoach;
 		mSeatsCoach = seatsCoach;
+		line = "---------------------------------------------------------------";
+		line2 = "______________________________________________________________";
+		
 	}
-
+	// @Override
+	// public String toString() {
+	// 	return "Flight [airplane=" + mAirplane + ", number=" + mNumber + ", arrival=" + mCodeArrival + ", departure="
+	// 			+ mCodeDepart + ", arrivalTime=" + mTimeArrival.toString() + ", departureTime=" + mTimeDepart.toString() + ", seat_First_Class="
+	// 			+ String.valueOf(mSeatsFirstclass) + ", flightTime=" + mFlightTime + "]";
+	// }
 	public boolean isValid() {
 		try {
 			if ((mAirplane == null) || (mAirplane.length() == 0)) {
@@ -267,7 +277,6 @@ public class Flight {
 	public void setmSeatsCoach(int mSeatsCoach) {
 		this.mSeatsCoach = mSeatsCoach;
 	}
-	
 	/**
 	 * This method returns the string representation of a flight.
 	 * 
@@ -275,9 +284,14 @@ public class Flight {
 	 * 
 	 */
 	@Override
+	
 	public String toString() {
-		return "Flight " + this.mNumber + ": Departing " + this.mCodeDepart + " at " + this.mTimeDepart + ", Arriving " + this.mCodeArrival + " at " + this.mTimeArrival;
-	}
+		return "\tFlight\t\t Departure\t\t Arrival\t Coach Price\t FC Price\n\t" + 
+		this.mNumber + "\t\t " + this.mCodeDepart + " --------------------> " +this.mCodeArrival+"\t\t " + this.mPriceCoach+"\t\t " + this.mPriceFirstclass +
+		"\nTime\t\t" + this.mTimeDepart + "\t" + this.mTimeArrival ;//+
+//		"\n"+ this.line2;
+
+	}	
 }
  
 
