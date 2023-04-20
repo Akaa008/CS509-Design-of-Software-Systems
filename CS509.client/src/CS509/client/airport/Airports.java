@@ -160,13 +160,12 @@ public class Airports extends ArrayList<Airport> {
 	      }
 	      return "";
 	}
-	
 	/**  Does the list contain the airport?
 	 * @param String input 3 digit code
 	 * @return Boolean true/false if the list has the associated airport.
 	 */
 	
-	public Boolean containsCode(String code) {
+	 public Boolean containsCode(String code) {
 		Boolean containsCode = false;
 		
 		Iterator<Airport> iter = this.iterator();
@@ -180,24 +179,5 @@ public class Airports extends ArrayList<Airport> {
 		}
 		
 		return containsCode;
-	}
-	
-	/** toString override for the Airports object.
-	 * @author lombardi
-	 * @return String
-	 */
-	@Override
-	public String toString() {
-		String builtList = new String();
-		Iterator<Airport> iter = this.iterator();
-		
-		if(!iter.hasNext()) {
-			return "No airports in list";
-		}
-		
-		while(iter.hasNext()) {
-			builtList += iter.next().toString() + "\r\n";
-		}
-		return builtList;
 	}
 }

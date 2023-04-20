@@ -5,9 +5,14 @@ package CS509.client.flight;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
-
+//----------------------
+// import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+//----------------------
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -33,7 +38,6 @@ public class Flights extends ArrayList <Flight> {
 	private static final long serialVersionUID = 1L;
 
 	public boolean addAll (String xmlFlights) {
-	
 		
 		boolean collectionUpdated = false;
 		
@@ -54,6 +58,27 @@ public class Flights extends ArrayList <Flight> {
 		
 		return collectionUpdated;
 	}
+	//---------------------------
+	public static Flights addAllf (String xmlFlights) throws NullPointerException {
+		Flights flights = new Flights();
+		
+		
+		// Load the XML string into a DOM tree for ease of processing
+		// then iterate over all nodes adding each flight to our collection
+		Document docFlights = buildDomDoc (xmlFlights);
+		NodeList nodesFlights = docFlights.getElementsByTagName("Flight");
+		
+		for (int i = 0; i < nodesFlights.getLength(); i++) {
+			Element elementFlight = (Element) nodesFlights.item(i);
+			Flight flight = buildFlight (elementFlight);
+			
+			flights.add(flight);
+		}
+		
+		return flights;
+	}
+
+	//--------------------------
 	
 	/**
 	 * Builds a DOM tree form an XML string
@@ -63,7 +88,7 @@ public class Flights extends ArrayList <Flight> {
 	 * @param xmlString XML String containing set of objects
 	 * @return DOM tree from parsed XML or null if exception is caught
 	 */
-	private Document buildDomDoc (String xmlString) {
+	static private Document buildDomDoc (String xmlString) {
 		/**
 		 * load the xml string into a DOM document and return the Document
 		 */
@@ -99,7 +124,7 @@ public class Flights extends ArrayList <Flight> {
 	 * 
 	 * @preconditions nodeFlight is of format specified by CS509 server API
 	 */
-	private Flight buildFlight (Node nodeFlight) {
+	static private Flight buildFlight (Node nodeFlight) {
 		/**
 		 * flight will be instantiated after attributes are parsed from XML node
 		 */
@@ -177,18 +202,14 @@ public class Flights extends ArrayList <Flight> {
 	      }
 	      return "";
 	}
-
-	/** toString override for the Flights object.
-	 * @author lombardi
-	 * @return String
-	 */
 	@Override
 	public String toString() {
 		String builtList = new String();
 		Iterator<Flight> iter = this.iterator();
 		
 		if(!iter.hasNext()) {
-			return "No flights in list";
+			return "Looks like there are no flights available.\n"
+					+ "Perhaps you could try summoning a dragon to fly you there instead?";
 		}
 		
 		while(iter.hasNext()) {
@@ -196,4 +217,5 @@ public class Flights extends ArrayList <Flight> {
 		}
 		return builtList;
 	}
+
 }

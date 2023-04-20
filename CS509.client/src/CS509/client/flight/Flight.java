@@ -4,7 +4,10 @@
 package CS509.client.flight;
 
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
+import CS509.client.airport.Airports;
+import CS509.client.airport.TimeConversion;
 
 /**
  * This class holds values pertaining to a single flight from one airport to another. 
@@ -33,6 +36,9 @@ public class Flight {
 	private int mSeatsFirstclass;
 	private String mPriceCoach;
 	private int mSeatsCoach;
+	private String line;
+	private String line2;
+	private static Airports mAirports;
 	
 	public Flight (
 			String airplane,
@@ -58,6 +64,9 @@ public class Flight {
 		mSeatsFirstclass = seatsFirstclass;
 		mPriceCoach = priceCoach;
 		mSeatsCoach = seatsCoach;
+		line = "---------------------------------------------------------------";
+		line2 = "______________________________________________________________";
+		
 	}
 
 	public boolean isValid() {
@@ -268,6 +277,10 @@ public class Flight {
 		this.mSeatsCoach = mSeatsCoach;
 	}
 	
+	public static void setmAirports(Airports airports) {
+		mAirports = airports;
+	}
+
 	/**
 	 * This method returns the string representation of a flight.
 	 * 
@@ -275,9 +288,13 @@ public class Flight {
 	 * 
 	 */
 	@Override
+	
 	public String toString() {
-		return "Flight " + this.mNumber + ": Departing " + this.mCodeDepart + " at " + this.mTimeDepart + ", Arriving " + this.mCodeArrival + " at " + this.mTimeArrival;
-	}
+		return "\tFlight\t\t Departure\t\t Arrival\t Coach Price\t FC Price\n\t" + 
+		this.mNumber + "\t\t " + this.mCodeDepart + " --------------------> " +this.mCodeArrival+"\t\t " + this.mPriceCoach+"\t\t " + this.mPriceFirstclass +
+		"\nTime\t\t" + TimeConversion.loctime(mAirports,this.mTimeDepart,this.mCodeDepart) + "\t" + TimeConversion.loctime(mAirports,this.mTimeArrival,this.mCodeArrival) ;//+
+
+	}	
 }
  
 

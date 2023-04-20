@@ -135,8 +135,16 @@ public class Airport {
 	 * @return The north/south coordinate of the airport 
 	 */
 	public double latitude () {
+//		System.out.println(mCode);
+//		System.out.println(mLatitude);
+//		System.out.println(mLongitude);
 		return mLatitude;
 	}
+	
+//	public double getlatitude (String Code) {
+//		if (this.mCode.equals(Code)){
+//		return this.mLatitude;}
+//	}
 	
 	/**
 	 * Set the longitude for the airport
@@ -219,7 +227,6 @@ public class Airport {
 		
 		return true;
 	}
-	
 	/**
 	 * Provide a method to return the string representation of Airport
 	 * 
@@ -229,5 +236,7 @@ public class Airport {
 	@Override
 	public String toString() {
 		return this.mCode + ": " + this.mName;
+		// return this.mName;
 	}
+
 }
